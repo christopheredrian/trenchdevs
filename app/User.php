@@ -28,6 +28,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property $avatar_url
  * @property $username
  * @property $role
+ * @property $account
  * @package App
  */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
@@ -235,6 +236,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function portfolioDetails()
     {
         return $this->hasOne(UserPortfolioDetail::class);
+    }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
     }
 
 

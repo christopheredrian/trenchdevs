@@ -4,6 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property $id
+ * @property $business_name
+ * Class Account
+ * @package App
+ */
 class Account extends Model
 {
     /**

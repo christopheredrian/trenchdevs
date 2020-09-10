@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-//    if (env('APP_ENV') !== 'production') {
-//        // can be used for testing on react app
-//        Auth::guard('web')->loginUsingId(2);
-//    }
+if (env('APP_ENV') !== 'production') {
+    // can be used for testing on react app
+    Auth::guard('web')->loginUsingId(2);
+}
 
 Route::middleware(['auth:web', 'webapi'])->group(function () {
 
@@ -28,6 +28,14 @@ Route::middleware(['auth:web', 'webapi'])->group(function () {
 
     Route::get('me', function () {
         return response()->json(auth()->user());
+    });
+
+
+
+    // todo: chris - restrict to account id 3 / subdomain check
+    Route::prefix('alumni')->group(function(){
+        Route::get('events', 'Alumni\AlumniEventsController@getAllEvents');
+        Route::post('events/upsert','Alumni\AlumniEventsController@upsert');
     });
 
 });

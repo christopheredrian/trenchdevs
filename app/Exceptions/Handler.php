@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
                 abort(500, "There was an error while processing your request. Admin has been notified");
             }
         }
-        
+
         parent::report($exception);
     }
 
@@ -63,6 +63,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof TrenchDevsWebApiException) {
+            return \response()->json([
+                'errors' => $exception->getUniqueErrors(),
+                'message' => $exception->getMessage(),
+                'status' => 'error',
+            ]);
+        }
+
         return parent::render($request, $exception);
     }
 
