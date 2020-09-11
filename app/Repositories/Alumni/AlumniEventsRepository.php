@@ -7,8 +7,6 @@ use App\Account;
 use App\Alumni\AlumniEvent;
 use App\Exceptions\TrenchDevsWebApiException;
 use App\User;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class AlumniEventsRepository

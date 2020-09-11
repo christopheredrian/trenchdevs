@@ -35,6 +35,7 @@ Route::middleware(['auth:web', 'webapi'])->group(function () {
     // todo: chris - restrict to account id 3 / subdomain check
     Route::prefix('alumni')->group(function(){
         Route::get('events', 'Alumni\AlumniEventsController@getAllEvents');
+        Route::get('events/{id}', 'Alumni\AlumniEventsController@getEvent');
         Route::post('events/upsert','Alumni\AlumniEventsController@upsert');
     });
 

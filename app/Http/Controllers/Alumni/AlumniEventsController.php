@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Alumni;
 
+use App\Alumni\AlumniEvent;
 use App\Exceptions\TrenchDevsWebApiException;
 use App\Http\Controllers\AuthWebController;
 use App\Repositories\Alumni\AlumniEventsRepository;
@@ -30,6 +31,17 @@ class AlumniEventsController extends AuthWebController
     {
         return response()
             ->json($this->alumniEventRepository->all());
+    }
+
+    /**
+     * Get a single event
+     * @param int $id
+     */
+    public function getEvent(int $id)
+    {
+        return $this->jsonResponse(self::STATUS_SUCCESS, 'Success', [
+            'alumni_event' => AlumniEvent::query()->findOrFail($id)
+        ]);
     }
 
 

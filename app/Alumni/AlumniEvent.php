@@ -6,6 +6,7 @@ use App\Exceptions\TrenchDevsWebApiException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
+use Illuminate\Validation\Rule;
 
 /**
  * Class AlumniEvent
@@ -41,6 +42,9 @@ class AlumniEvent extends Model
         'updated_by',
     ];
 
+
+    // https://daylerees.com/trick-validation-within-models/
+    // todo: chris - can have this as a separate abstract class
     /** @var MessageBag */
     protected $errors = null;
 
@@ -56,6 +60,7 @@ class AlumniEvent extends Model
 
         if ($id) {
             $this->rules['id'] = ['exists:alumni_events'];
+            $this->rules['name'] = ['required', 'max:255', Rule::unique($this->table)->ignore($id)];
         }
 
         $v = Validator::make($data, $this->rules);
