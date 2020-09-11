@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Account;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -8,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class InitTestDataSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */

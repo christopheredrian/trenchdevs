@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountsController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Projects\ProjectsController;
+use App\Http\Controllers\SuperAdmin\CommandsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -51,11 +55,11 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/home', 'HomeController@index');
 
     // START - users
-    Route::get('admin/users/create', 'Admin\UsersController@create')->name('users.create');
-    Route::post('admin/users/upsert', 'Admin\UsersController@upsert')->name('users.upsert');
-    Route::post('admin/users/password_reset', 'Admin\UsersController@passwordReset')->name('users.password_reset');
-    Route::get('admin/users/{id}', 'Admin\UsersController@edit')->name('users.edit');
-    Route::get('admin/users', 'Admin\UsersController@index')->name('users.index');
+    Route::get('admin/users/create', [UsersController::class, 'create'])->name('users.create');
+    Route::post('admin/users/upsert', [UsersController::class, 'upsert'])->name('users.upsert');
+    Route::post('admin/users/password_reset', [UsersController::class, 'passwordReset'])->name('users.password_reset');
+    Route::get('admin/users/{id}', [UsersController::class, 'edit'])->name('users.edit');
+    Route::get('admin/users', [UsersController::class, 'index'])->name('users.index');
 
     Route::post('users/change_password', 'Admin\UsersController@changePassword')->name('users.change_password');
     // End - users
@@ -132,17 +136,17 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     // end - profile
 
     // start - commands
-    Route::get('superadmin/commands', 'SuperAdmin\CommandsController@index')->name('superadmin.index');
-    Route::post('superadmin/commands', 'SuperAdmin\CommandsController@command')->name('superadmin.command');
+    Route::get('superadmin/commands', [CommandsController::class, 'index'])->name('superadmin.index');
+    Route::post('superadmin/commands', [CommandsController::class, 'command'])->name('superadmin.command');
     // end - commands
 
     // start - global projects
-    Route::get('projects', 'Projects\ProjectsController@index')->name('projects.list');
+    Route::get('projects', [ProjectsController::class, 'index'])->name('projects.list');
     // end - global projects
 
 
     // START - accounts
-    Route::get('accounts', 'Admin\AccountsController@index')->name('accounts.index');
+    Route::get('accounts', [AccountsController::class, 'index'])->name('accounts.index');
     // END - accounts
 
 });
