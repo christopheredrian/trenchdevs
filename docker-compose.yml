@@ -6,9 +6,10 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-    tmpfs: /var/lib/mysql
+    # tmpfs: /var/lib/mysql
     volumes:
       - ./database/docker-init:/docker-entrypoint-initdb.d
+      - ./storage/app/docker/mysql:/var/lib/mysql
     ports:
       - ${DB_PORT}:3306
     healthcheck:

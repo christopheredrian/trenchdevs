@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "marked": "^1.2.3",
         "vue-autosuggest": "^2.2.0",
         "vue-feather-icons": "^5.1.0",
         "vue2-editor": "^2.10.2"

@@ -6,6 +6,7 @@ use App\Http\Controllers\AwsController;
 use App\Http\Controllers\Blogs\PublicBlogsController;
 use App\Http\Controllers\EmailTester;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MardownNotes\MarkdownNotesController;
 use App\Http\Controllers\Notifications\EmailPreferencesController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
@@ -163,6 +164,9 @@ Route::middleware(['auth:web', 'verified'])->prefix('portal')->group(function ()
     Route::get('projects', [ProjectsController::class, 'index'])->name('projects.list');
     // end - global projects
 
+    // start - markdown notes module
+    Route::get('markdown/create', [MarkdownNotesController::class, 'create'])->name('markdown-notes.create');
+    // end - markdow notes module
 
     // START - accounts
     Route::get('accounts', [AccountsController::class, 'index'])->name('accounts.index');
