@@ -1,15 +1,49 @@
-version: '3.4'
-
+version: "3.7"
 services:
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-    tmpfs: /var/lib/mysql
+
+  app:
+    build:
+      args:
+        user: trenchdevs-developer
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile.dev
+    image: trenchdevs
+    container_name: trenchdevs-app
+    restart: unless-stopped
+    working_dir: /var/www/
     volumes:
-      - ./database/docker-init:/docker-entrypoint-initdb.d
+      - ./:/var/www
+    networks:
+      - trenchdevs
+
+  db:
+    image: mysql:5.7
+    container_name: trenchdevs-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - trenchdevs
+
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: trenchdevs-nginx
+    restart: unless-stopped
     ports:
-      - ${DB_PORT}:3306
-    healthcheck:
-      test: mysqladmin ping
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - trenchdevs
+networks:
+  trenchdevs:
+    driver: bridge
